@@ -4,3 +4,11 @@ data/thor_v1_offline_data
 runs/
 *.pyc
 .idea/
+
+data/
+data.zip
+train/
+train.zip
+
+mjolnir_o.json
+saved_action_mjolnir_o.log
