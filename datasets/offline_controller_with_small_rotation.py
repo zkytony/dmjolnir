@@ -17,6 +17,8 @@ except ImportError:
 from ai2thor.controller import Controller, distance
 from .base_controller import BaseController
 
+ACTIONS_LIST = ["MoveAhead", "RotateLeft", "RotateRight", "LookUp", "LookDown"]
+
 class ThorAgentState:
     """ Representation of a simple state of a Thor Agent which includes
         the position, horizon and rotation. """
@@ -83,8 +85,8 @@ class ExhaustiveBFSController(Controller):
         when you are navigating towards an object. Additionally, there is some
         rare occurances of positions which you can only get to in a certain way.
         This ExhaustiveBFSController introduces the safe_teleport method which
-        ensures that all states will be covered. 
-        Strongly recomend having a seperate directory for each scene. See 
+        ensures that all states will be covered.
+        Strongly recomend having a seperate directory for each scene. See
         OfflineControllerWithSmallRotation for more information on how the generated data may be used. """
 
     def __init__(
@@ -101,7 +103,7 @@ class ExhaustiveBFSController(Controller):
         debug_mode=True,
         grid_assumption=False,
         local_executable_path=None,
-        actions=["MoveAhead", "RotateLeft", "RotateRight", "LookUp", "LookDown"],
+        actions=ACTIONS_LIST,
     ):
 
         super(ExhaustiveBFSController, self).__init__()
@@ -543,7 +545,7 @@ class OfflineControllerWithSmallRotation(BaseController):
         images_file_name="images.hdf5",
         objbb_file_name = "objects_bb.json",
         debug_mode=True,
-        actions=["MoveAhead", "RotateLeft", "RotateRight", "LookUp", "LookDown"],
+        actions=ACTIONS_LIST,
         visualize=True,
         local_executable_path=None,
     ):

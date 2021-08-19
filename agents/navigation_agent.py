@@ -22,19 +22,34 @@ class NavigationAgent(ThorAgent):
         )
         self.hidden_state_sz = hidden_state_sz
 
-    def eval_at_state(self, model_options):
+    def eval_at_state(self, model_options,
+                      state_info=None, glove_embedding=None):
+        """
+        additional arguments:
+        state_info: has properties 'frame' (RGB frame) and 'objbb' object bounding boxes.
+        """
         model_input = ModelInput()
-        if self.episode.current_frame is None:
-            model_input.state = self.state()
-        else:
-            model_input.state = self.episode.current_frame
 
-        if self.episode.current_objs is None:
-            model_input.objbb = self.objstate()
+        if state_info is not None:
+            model_input.state = state_info.frame
+            # maps from object class to [x1, y1, x2, y2] bounding box (see mjolnir_o.py:list_from_raw_obj)
+            model_input.objbb = state_info.objbb
         else:
-            model_input.objbb = self.episode.current_objs
+            if self.episode.current_frame is None:
+                model_input.state = self.state()
+            else:
+                model_input.state = self.episode.current_frame
+
+            if self.episode.current_objs is None:
+                model_input.objbb = self.objstate()
+            else:
+                model_input.objbb = self.episode.current_objs
+
+        if glove_embedding is None:
+            glove_embedding = self.episode.glove_embedding
+
         model_input.hidden = self.hidden
-        model_input.target_class_embedding = self.episode.glove_embedding
+        model_input.target_class_embedding = glove_embedding
         model_input.action_probs = self.last_action_probs
 
         return model_input, self.model.forward(model_input, model_options)

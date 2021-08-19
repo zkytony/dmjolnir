@@ -1,3 +1,7 @@
+*~
+.\#*
+\#*
+
 .DS_Store
 data/thor_offline_data
 data/thor_v1_offline_data
@@ -12,6 +16,7 @@ train.zip
 
 mjolnir_o.json
 saved_action_mjolnir_o.log
+saved_action_savn_test.log
 
 savn_test.json
 

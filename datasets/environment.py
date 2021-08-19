@@ -40,9 +40,7 @@ class Environment:
             self.controller = OnlineController(
                 grid_size=grid_size,
                 fov=fov
-
             )
-
 
         self.grid_size = grid_size
         self._reachable_points = None

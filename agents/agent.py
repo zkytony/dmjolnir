@@ -111,14 +111,17 @@ class ThorAgent:
         else:
             self.max_length = False
 
-    def action(self, model_options, training, demo=False):
+    def action(self, model_options, training, demo=False, state_info=None,
+               just_return_action=False, glove_embedding=None):
         """ Train the agent. """
         if training:
             self.model.train()
         else:
             self.model.eval()
 
-        model_input, out = self.eval_at_state(model_options)
+        model_input, out = self.eval_at_state(model_options,
+                                              state_info=state_info,
+                                              glove_embedding=glove_embedding)
         self.hidden = out.hidden
         prob = F.softmax(out.logit, dim=1)
         action = prob.multinomial(1).data
@@ -126,6 +129,10 @@ class ThorAgent:
         self.last_action_probs = prob
         entropy = -(log_prob * prob).sum(1)
         log_prob = log_prob.gather(1, Variable(action))
+
+        if just_return_action:
+            return action, log_prob
+
         self.reward, self.done, self.info = self.episode.step(action[0, 0])
 
         if self.verbose:

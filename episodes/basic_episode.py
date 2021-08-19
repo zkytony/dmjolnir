@@ -108,7 +108,7 @@ class BasicEpisode(Episode):
         done = False
 
         if action["action"] == DONE:
-            action_was_successful = False
+            action_ppwas_successful = False
             for id_ in self.task_data:
                 if self.environment.object_is_visible(id_):
                     reward = GOAL_SUCCESS_REWARD
@@ -158,15 +158,21 @@ class BasicEpisode(Episode):
         return reward
 
     def _new_episode(
-        self, args, scenes, possible_targets, targets=None, room = None, keep_obj=False, glove=None
+            self, args, scenes, possible_targets, targets=None, room=None, keep_obj=False, glove=None,
+            use_offline_controller=True
     ):
         """ New navigation episode. """
+        if use_offline_controller:
+            offline_data_dir = args.offline_data_dir
+        else:
+            offline_data_dir = None
+
         scene = random.choice(scenes)
         self.room = room
         if self._env is None:
             self._env = Environment(
-                offline_data_dir=args.offline_data_dir,
-                use_offline_controller=True,
+                offline_data_dir=offline_data_dir,
+                use_offline_controller=use_offline_controller,
                 grid_size=0.25,
                 images_file_name=args.images_file_name,
                 local_executable_path=args.local_executable_path,
@@ -217,6 +223,7 @@ class BasicEpisode(Episode):
         rooms=None,
         keep_obj=False,
         glove=None,
+        use_offline_controller=True
     ):
         self.done_count = 0
         self.duplicate_count = 0
@@ -224,4 +231,5 @@ class BasicEpisode(Episode):
         self.prev_frame = None
         self.current_frame = None
         self.current_objs = None
-        self._new_episode(args, scenes, possible_targets, targets, rooms, keep_obj, glove)
+        self._new_episode(args, scenes, possible_targets, targets, rooms, keep_obj, glove,
+                          use_offline_controller=use_offline_controller)
