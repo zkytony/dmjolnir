@@ -11,8 +11,13 @@ import numpy as np
 from datasets.glove import Glove
 from .model_io import ModelOutput
 from utils import flag_parser
-args = flag_parser.parse_arguments()
+# args = flag_parser.parse_arguments()
 
+import json
+import os
+ABS_PATH = os.path.dirname(os.path.abspath(__file__))
+gcn_adjmat_path = os.path.join(ABS_PATH, "../data/gcn/adjmat.dat")
+gcn_objects_path = os.path.join(ABS_PATH, "../data/gcn/objects.txt")
 
 def normalize_adj(adj):
     adj = sp.coo_matrix(adj)
@@ -32,7 +37,7 @@ class MJOLNIR_O(torch.nn.Module):
 
         # get and normalize adjacency matrix.
         np.seterr(divide='ignore')
-        A_raw = torch.load("./data/gcn/adjmat.dat")
+        A_raw = torch.load(gcn_adjmat_path)
         A = normalize_adj(A_raw).tocsr().toarray()
         self.A = torch.nn.Parameter(torch.Tensor(A))
 
@@ -68,7 +73,7 @@ class MJOLNIR_O(torch.nn.Module):
         self.dropout = nn.Dropout(p=args.dropout_rate)
 
         # glove embeddings for all the objs.
-        with open ("./data/gcn/objects.txt") as f:
+        with open (gcn_objects_path) as f:
             objects = f.readlines()
             self.objects = [o.strip() for o in objects]
         all_glove = torch.zeros(n, 300)

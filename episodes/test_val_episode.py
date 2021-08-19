@@ -9,11 +9,13 @@ from datasets.glove import Glove
 from utils import flag_parser
 from datasets.offline_controller_with_small_rotation import ThorAgentState
 import sys
+import os
+ABS_PATH = os.path.dirname(os.path.abspath(__file__))
 
-c2p_prob = json.load(open("./data/c2p_prob.json"))
+c2p_prob = json.load(open(os.path.join(ABS_PATH, "../data/c2p_prob.json")))
 rooms = ['Kitchen', 'Living_Room', 'Bedroom', 'Bathroom']
-args = flag_parser.parse_arguments()
-metadata_dir = "./data/thor_v1_offline_data/"
+#args = flag_parser.parse_arguments()
+#metadata_dir = "./data/thor_v1_offline_data/"
 
 
 import re

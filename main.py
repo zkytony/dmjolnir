@@ -63,7 +63,7 @@ def main():
         args.gpu_ids = [-1]
     else:
         torch.cuda.manual_seed(args.seed)
-        mp.set_start_method("spawn")
+        mp.set_start_method("spawn", force=True)
 
     shared_model = create_shared_model(args)
 
@@ -90,6 +90,17 @@ def main():
     train_res_queue = mp.Queue()
 
     for rank in range(0, args.workers):
+        # args=(
+        #     rank,
+        #     args,
+        #     create_shared_model,
+        #     shared_model,
+        #     init_agent,
+        #     optimizer,
+        #     train_res_queue,
+        #     end_flag,
+        # )
+        # target(*args)
         p = mp.Process(
             target=target,
             args=(
@@ -115,7 +126,7 @@ def main():
     save_entire_model = 0
     try:
         while train_total_ep < args.max_ep:
-
+            print("Training episode:", train_total_ep)
             train_result = train_res_queue.get()
             train_scalars.add_scalars(train_result)
             train_total_ep += 1

@@ -14,9 +14,11 @@ from .episode import Episode
 from utils import flag_parser
 
 import json
+import os
+ABS_PATH = os.path.dirname(os.path.abspath(__file__))
 
-c2p_prob = json.load(open("./data/c2p_prob.json"))
-args = flag_parser.parse_arguments()
+c2p_prob = json.load(open(os.path.join(ABS_PATH, "../data/c2p_prob.json")))
+# args = flag_parser.parse_arguments()
 
 class BasicEpisode(Episode):
     """ Episode for Navigation. """

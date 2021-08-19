@@ -66,7 +66,7 @@ def nonadaptivea3c_train(
         # Get a new episode.
         total_reward = 0
         player.eps_len = 0
-         #mark1
+        #mark1
         new_episode(
             args, player, scenes[idx[j]], possible_targets, targets[idx[j]], rooms[idx[j]], glove=glove
         )
