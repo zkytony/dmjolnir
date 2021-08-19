@@ -31,14 +31,13 @@ def nonadaptivea3c_val(
     scene_type,
 ):
 
-    print("rank:", rank)
-    print("args:", args)
-    print("model_to_open:", model_to_open)
-    print("model_create_fn:", model_create_fn)
-    print("initialize_agent:", initialize_agent)
-    print("max_coutn:", max_count)
-    print("scene_type:", scene_type)
-
+    # print("rank:", rank)
+    # print("args:", args)
+    # print("model_to_open:", model_to_open)
+    # print("model_create_fn:", model_create_fn)
+    # print("initialize_agent:", initialize_agent)
+    # print("max_coutn:", max_count)
+    # print("scene_type:", scene_type)
 
     glove = Glove(args.glove_file)
     scenes, possible_targets, targets, rooms = get_data(args.scene_types, args.val_scenes) #mark3

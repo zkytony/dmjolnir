@@ -90,32 +90,32 @@ def main():
     train_res_queue = mp.Queue()
 
     for rank in range(0, args.workers):
-        # args=(
-        #     rank,
-        #     args,
-        #     create_shared_model,
-        #     shared_model,
-        #     init_agent,
-        #     optimizer,
-        #     train_res_queue,
-        #     end_flag,
-        # )
-        # target(*args)
-        p = mp.Process(
-            target=target,
-            args=(
-                rank,
-                args,
-                create_shared_model,
-                shared_model,
-                init_agent,
-                optimizer,
-                train_res_queue,
-                end_flag,
-            ),
+        args=(
+            rank,
+            args,
+            create_shared_model,
+            shared_model,
+            init_agent,
+            optimizer,
+            train_res_queue,
+            end_flag,
         )
-        p.start()
-        processes.append(p)
+        target(*args)
+        # p = mp.Process(
+        #     target=target,
+        #     args=(
+        #         rank,
+        #         args,
+        #         create_shared_model,
+        #         shared_model,
+        #         init_agent,
+        #         optimizer,
+        #         train_res_queue,
+        #         end_flag,
+        #     ),
+        # )
+        # p.start()
+        # processes.append(p)
         time.sleep(0.1)
 
     print("Train agents created.")

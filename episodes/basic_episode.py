@@ -48,6 +48,8 @@ class BasicEpisode(Episode):
             random.seed(args.seed)
         self.room = None
 
+        self.vis = args.vis
+
     @property
     def environment(self):
         return self._env
@@ -75,7 +77,7 @@ class BasicEpisode(Episode):
 
         action = self.actions_list[action_as_int]
 
-        if args.vis:
+        if self.vis:
             print(action)
 
         if action["action"] != DONE:
@@ -118,7 +120,7 @@ class BasicEpisode(Episode):
                     break
             self.seen_list = []
 
-            if args.vis:
+            if self.vis:
                 print("Success:", action_was_successful)
         else:
             action_was_successful = self.environment.last_action_success
