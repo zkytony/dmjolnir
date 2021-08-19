@@ -11,7 +11,6 @@ import numpy as np
 from datasets.glove import Glove
 from .model_io import ModelOutput
 from utils import flag_parser
-# args = flag_parser.parse_arguments()
 
 import json
 import os

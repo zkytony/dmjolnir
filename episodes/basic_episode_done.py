@@ -16,7 +16,7 @@ from utils import flag_parser
 import json
 
 c2p_prob = json.load(open("./data/c2p_prob.json"))
-args = flag_parser.parse_arguments()
+# args = flag_parser.parse_arguments()
 
 class BasicEpisode(Episode):
     """ Episode for Navigation. """
@@ -45,6 +45,7 @@ class BasicEpisode(Episode):
         if args.eval:
             random.seed(args.seed)
         self.room = None
+        self.vis = args.vis
 
     @property
     def environment(self):
@@ -73,7 +74,7 @@ class BasicEpisode(Episode):
 
         action = self.actions_list[action_as_int]
 
-        if args.vis:
+        if self.vis:
             print(action)
 
         if action["action"] != DONE:

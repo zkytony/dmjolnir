@@ -11,8 +11,6 @@ import numpy as np
 from datasets.glove import Glove
 from .model_io import ModelOutput
 from utils import flag_parser
-args = flag_parser.parse_arguments()
-
 
 def normalize_adj(adj):
     adj = sp.coo_matrix(adj)
@@ -30,6 +28,8 @@ class MJOLNIR_R(torch.nn.Module):
         resnet_embedding_sz = 512
         hidden_state_sz = args.hidden_state_sz
         super(MJOLNIR_R, self).__init__()
+
+        self.gpu_ids = args.gpu_ids
 
         self.conv1 = nn.Conv2d(resnet_embedding_sz, 64, 1)
         self.maxp1 = nn.MaxPool2d(2, 2)
@@ -123,7 +123,7 @@ class MJOLNIR_R(torch.nn.Module):
             objstate[ind][1] = np.sum(x1+x2)/len(x1+x2) / 300
             objstate[ind][2] = np.sum(y1+y2)/len(y1+y2) / 300
             objstate[ind][3] = abs(max(x2) - min(x1)) * abs(max(y2) - min(y1)) / 300 / 300
-        if args.gpu_ids != -1:
+        if self.gpu_ids != [-1]:
             objstate = objstate.cuda()
             class_onehot = class_onehot.cuda()
         objstate = torch.cat((objstate, glove_sim),dim=1)
