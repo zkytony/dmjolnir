@@ -82,7 +82,7 @@ def nonadaptivea3c_val(
         # Get a new episode.
         total_reward = 0
         player.eps_len = 0
-         #mark 1
+        #mark 1
         new_episode(args, player, scenes, possible_targets, targets, rooms, glove=glove)
         player_start_state = copy.deepcopy(player.environment.controller.state)
         player_start_time = time.time()

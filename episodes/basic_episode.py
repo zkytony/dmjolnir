@@ -108,7 +108,7 @@ class BasicEpisode(Episode):
         done = False
 
         if action["action"] == DONE:
-            action_ppwas_successful = False
+            action_was_successful = False
             for id_ in self.task_data:
                 if self.environment.object_is_visible(id_):
                     reward = GOAL_SUCCESS_REWARD

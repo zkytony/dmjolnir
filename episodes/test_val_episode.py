@@ -67,6 +67,7 @@ class TestValEpisode(BasicEpisode):
         #     ind -= 1
         # room = rooms[ind]
         self.room = episode["room"]
+        self.scene = episode["scene"]
         try:
             self.target_parents = c2p_prob[self.room][self.target_object]
         except KeyError:

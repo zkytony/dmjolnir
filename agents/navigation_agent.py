@@ -31,7 +31,7 @@ class NavigationAgent(ThorAgent):
         model_input = ModelInput()
 
         if state_info is not None:
-            model_input.state = state_info.frame
+            model_input.state = state_info.resnet_features
             # maps from object class to [x1, y1, x2, y2] bounding box (see mjolnir_o.py:list_from_raw_obj)
             model_input.objbb = state_info.objbb
         else:
