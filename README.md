@@ -1,3 +1,4 @@
+## Original repository: https://github.com/cassieqiuyd/MJOLNIR
 # Learning hierarchical relationships for object-goal navigation
 
 Yiding Qiu*, Anwesan Pal* and Henrik I. Christensen
